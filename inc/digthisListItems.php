@@ -47,6 +47,17 @@ class digthisListItems {
 			$query_args['paged'] = $filter_options['show_page'];
 		}
 
+		if ( ! empty( $filter_options['category_id'] ) ) {
+			$query_args['tax_query'] = array(
+			        array(
+			                'taxonomy' => 'category',
+                             'terms' => $filter_options['category_id']
+                    )
+            );
+
+                $filter_options['category_id'];
+		}
+
 		$items = new WP_Query( $query_args );
 
 		$pagination = $this->get_pagination( $items, $filter_options );
@@ -137,6 +148,23 @@ class digthisListItems {
             <div class="pagination">
 				<?php echo $this->get_pagination( $listItems, 1 ); ?>
             </div>
+            <div class="item-filters">
+                <label for="category">
+                    Select Category
+                </label>
+                <select name="category" id="category">
+					<?php
+					$args  = array(
+						'taxonomy'   => 'category',
+						'hide_empty' => false
+					);
+					$terms = get_terms( $args );
+					foreach ( $terms as $term ) {
+					    echo '<option value="'.$term->term_id.'">'.$term->name.'</option>';
+					}
+					?>
+                </select>
+            </div>
             <div class="item-container">
 				<?php
 				if ( $listItems->have_posts() ):
@@ -153,7 +181,6 @@ class digthisListItems {
             </div><!--item-container-->
         </div><!--digthis-list-container-->
 		<?php
-
 		return ob_get_clean();
 	}
 }

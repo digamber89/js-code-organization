@@ -11,11 +11,14 @@
             this.$itemContainer = this.$mainContainer.find('.item-container');
             this.$paginationContainer = this.$mainContainer.find('.pagination');
             this.$pagination = this.$paginationContainer.find('.page-numbers');
+
+            this.$itemFilters = this.$mainContainer.find('.item-filters');
             //console.log(this.$pagination);
         },
         eventListeners: function () {
             this.$filterForm.on('submit', this.getSearchResult.bind(this));
             this.$paginationContainer.on('click', 'ul.page-numbers .page-numbers:not(.current)', this.getPageNumber.bind(this));
+            this.$itemFilters.on('change', '#category', this.filterItems.bind(this));
         },
         getPageNumber: function (e) {
             e.preventDefault();
@@ -45,15 +48,21 @@
                     console.log(response.data);
                     if (response.success === true) {
                         if (response.data.listHTML) {
-                            this.renderItems(response.data.listHTML,response.data.pagination);
+                            this.renderItems(response.data.listHTML, response.data.pagination);
                         }
                     } else {
-                        this.renderItems(response.data.message,'');
+                        this.renderItems(response.data.message, '');
                     }
                 }
             })
         },
-        renderItems: function (listHTML,pagination) {
+        filterItems: function(e){
+            e.preventDefault();
+            var $el = $(e.currentTarget);
+            var category_id = $el.val();
+            this.getItems({category_id:category_id});
+        },
+        renderItems: function (listHTML, pagination) {
             //place the items found
             this.$itemContainer.html(listHTML);
             //replace the pagination
