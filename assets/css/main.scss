@@ -39,8 +39,12 @@
   /* Contains the query results*/
   .item-container {
     width: 100%;
-    color: #fff;
     padding: 0 auto;
+    &:hover {
+      .item-details {
+        display: block;
+      }
+    }
     &:after {
       clear: both;
       content: ' ';
@@ -53,7 +57,7 @@
       margin-top: 10px;
       margin-right: 1.33%;
       min-height: 300px;
-      background:#ccc;
+      background: #ccc;
       .item-image {
         line-height: 0;
         img {
@@ -63,7 +67,7 @@
       }
       .item-details {
         background: rgba(0, 0, 0, 0.5);
-        display: none;
+        display: block;
         height: 100%;
         position: absolute;
         top: 0;
@@ -84,10 +88,10 @@
           color: #fff;
         }
       }
-      &:hover {
-        .item-details {
-          display: block;
-        }
+    }
+    .nothing-found {
+      h3 {
+        text-align: center;
       }
     }
 

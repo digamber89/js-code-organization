@@ -48,7 +48,7 @@
                             this.renderItems(response.data.listHTML,response.data.pagination);
                         }
                     } else {
-                        this.renderItems(response.data.message);
+                        this.renderItems(response.data.message,'');
                     }
                 }
             })

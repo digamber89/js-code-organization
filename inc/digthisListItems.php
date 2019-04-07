@@ -32,10 +32,11 @@ class digthisListItems {
 		$pagination = '';
 		$list_html  = '';
 		$query_args = array(
-			'post_type'      => 'post',
-			'post_status'    => 'publish',
-			'posts_per_page' => $this->posts_per_page,
-			'paged'          => $paged
+			'post_type'           => 'post',
+			'post_status'         => 'publish',
+			'posts_per_page'      => $this->posts_per_page,
+			'paged'               => $paged,
+			'ignore_sticky_posts' => 1
 		);
 
 		if ( ! empty( $filter_options['search_term'] ) ) {
@@ -59,7 +60,7 @@ class digthisListItems {
 			endwhile;
 			wp_reset_postdata();
 		else:
-			wp_send_json_error( array( 'message' => 'No Posts Found' ) );
+			wp_send_json_error( array( 'message' => '<div class="nothing-found"><h3>Sorry, Nothing to see here</h3></div>' ) );
 		endif;
 
 		$response = array(
@@ -125,29 +126,33 @@ class digthisListItems {
 		$listItems = new WP_Query( $args );
 		$base_url  = get_permalink( $post );
 		ob_start();
-		if ( $listItems->have_posts() ):
-			?>
-            <div class='digthis-list-container' data-baseurl="<?php echo $base_url ?>">
-                <div class="filter-items">
-                    <form>
-                        <input type="text" class="search" name="search" placeholder="search" autocomplete="off"/>
-                        <input type="submit" value="search">
-                    </form>
-                </div>
-                <div class="pagination">
-					<?php echo $this->get_pagination( $listItems, 1 ); ?>
-                </div>
-                <div class="item-container">
-					<?php
+		?>
+        <div class='digthis-list-container' data-baseurl="<?php echo $base_url ?>">
+            <div class="filter-items">
+                <form>
+                    <input type="text" class="search" name="search" placeholder="search" autocomplete="off"/>
+                    <input type="submit" value="search">
+                </form>
+            </div>
+            <div class="pagination">
+				<?php echo $this->get_pagination( $listItems, 1 ); ?>
+            </div>
+            <div class="item-container">
+				<?php
+				if ( $listItems->have_posts() ):
 					while ( $listItems->have_posts() ): $listItems->the_post();
 						get_template_part( 'template-parts/digthis-list-item' );
 					endwhile;
 					wp_reset_postdata();
+				else:
 					?>
-                </div>
-            </div>
+                    <div class="nothing-found"><h3>Sorry, Nothing to see here</h3></div>
+				<?php
+				endif;
+				?>
+            </div><!--item-container-->
+        </div><!--digthis-list-container-->
 		<?php
-		endif;
 
 		return ob_get_clean();
 	}
