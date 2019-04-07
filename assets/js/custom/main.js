@@ -9,10 +9,21 @@
             this.$mainContainer = $('.digthis-list-container');
             this.$filterForm = this.$mainContainer.find('.filter-items form');
             this.$itemContainer = this.$mainContainer.find('.item-container');
-            console.log(this.$itemContainer);
+            this.$paginationContainer = this.$mainContainer.find('.pagination');
+            this.$pagination = this.$paginationContainer.find('.page-numbers');
+            //console.log(this.$pagination);
         },
         eventListeners: function () {
             this.$filterForm.on('submit', this.getSearchResult.bind(this));
+            this.$paginationContainer.on('click', 'ul.page-numbers .page-numbers:not(.current)', this.getPageNumber.bind(this));
+        },
+        getPageNumber: function (e) {
+            e.preventDefault();
+            var $el = $(e.currentTarget);
+            var pageNumber = $el.text();
+            var baseUrl = this.$mainContainer.data('baseurl');
+            var filterOptions = {show_page: pageNumber, base_page: baseUrl};
+            this.getItems(filterOptions);
         },
         getSearchResult: function (e) {
             e.preventDefault();
@@ -31,9 +42,10 @@
 
                 },
                 success: function (response) {
+                    console.log(response.data);
                     if (response.success === true) {
                         if (response.data.listHTML) {
-                            this.renderItems(response.data.listHTML);
+                            this.renderItems(response.data.listHTML,response.data.pagination);
                         }
                     } else {
                         this.renderItems(response.data.message);
@@ -41,8 +53,11 @@
                 }
             })
         },
-        renderItems: function (listHTML) {
+        renderItems: function (listHTML,pagination) {
+            //place the items found
             this.$itemContainer.html(listHTML);
+            //replace the pagination
+            this.$paginationContainer.html(pagination);
         }
     };
 

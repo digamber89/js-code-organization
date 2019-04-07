@@ -24,26 +24,33 @@ class digthisListItems {
 		 * Pagination
 		 * Tax Query
 		 */
-		$query_args      = array(
-			'post_type'      => 'post',
-			'post_status'    => 'publish',
-			'posts_per_page' => $this->posts_per_page
-		);
-		$filter_defaults = array(
-			'search_term' => false,
-		);
-
 		$filter_options = filter_input( INPUT_POST, 'filters', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-		$filter_options = array_merge( $filter_defaults, $filter_options );
+		//$filter_options = array_merge( $filter_defaults, $filter_options );
+
+		$paged      = 1;
+		$pagination = '';
+		$list_html  = '';
+		$query_args = array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'posts_per_page' => $this->posts_per_page,
+			'paged'          => $paged
+		);
 
 		if ( ! empty( $filter_options['search_term'] ) ) {
 			$query_args['s'] = esc_html( $filter_options['search_term'] );
 		}
 
-		$items       = new WP_Query( $query_args );
+		if ( ! empty( $filter_options['show_page'] ) ) {
+			$query_args['paged'] = $filter_options['show_page'];
+		}
+
+		$items = new WP_Query( $query_args );
+
+		$pagination = $this->get_pagination( $items, $filter_options );
+
 		$posts_found = $items->found_posts;
-		$list_html   = '';
 		if ( $items->have_posts() ):
 			while ( $items->have_posts() ): $items->the_post();
 				ob_start();
@@ -55,13 +62,17 @@ class digthisListItems {
 			wp_send_json_error( array( 'message' => 'No Posts Found' ) );
 		endif;
 
-		$response = array( 'listHTML' => $list_html, 'posts_found' => $posts_found );
+		$response = array(
+			'listHTML'    => $list_html,
+			'posts_found' => $posts_found,
+			'pagination'  => $pagination
+		);
+
 		wp_send_json_success( $response );
 
 	}
 
 	public function get_pagination( $query, $atts ) {
-
 		$paged = get_query_var( 'paged' );
 		if ( $atts['show_page'] ) {
 			$paged = (int) $atts['show_page'];
@@ -74,14 +85,14 @@ class digthisListItems {
 		// problem: https://stackoverflow.com/questions/20150653/wordpress-pagination-not-working-with-ajax
 
 		$page_link = esc_url( get_pagenum_link( $big ) );
+
 		if ( wp_doing_ajax() && $atts['base_page'] ) {
 			$base         = $atts['base_page'];
 			$orig_req_uri = $_SERVER['REQUEST_URI'];
-
 			// Overwrite the REQUEST_URI variable
 			$_SERVER['REQUEST_URI'] = $base;
-
-			$page_link = esc_url( get_pagenum_link( $paged ) );
+			//print_r($atts); die;
+			$page_link = esc_url( get_pagenum_link( $big ) );
 
 			// Restore the original REQUEST_URI - in case anything else would resort on it
 			$_SERVER['REQUEST_URI'] = $orig_req_uri;
@@ -103,6 +114,7 @@ class digthisListItems {
 	}
 
 	public function jso_list_items_shortcode() {
+		global $post;
 		$paged     = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 		$args      = array(
 			'post_type'      => 'post',
@@ -111,10 +123,11 @@ class digthisListItems {
 			'paged'          => $paged
 		);
 		$listItems = new WP_Query( $args );
+		$base_url  = get_permalink( $post );
 		ob_start();
 		if ( $listItems->have_posts() ):
 			?>
-            <div class='digthis-list-container'>
+            <div class='digthis-list-container' data-baseurl="<?php echo $base_url ?>">
                 <div class="filter-items">
                     <form>
                         <input type="text" class="search" name="search" placeholder="search" autocomplete="off"/>
