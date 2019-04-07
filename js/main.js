@@ -1,4 +1,22 @@
 (function ($) {
+
+    var mainNavigation = {
+        init: function () {
+            //cache dom
+            this.$navMenu = $(document).find('.navigation-custom');
+            this.$menuOpenTrigger = $(document).find('.nav-trigger');
+
+            //event triggers
+            this.$menuOpenTrigger.on('click', this.openMenu.bind(this));
+            this.$navMenu.on('click', '.close-menu', this.closeMenu.bind(this));
+        },
+        openMenu: function () {
+            this.$navMenu.addClass('menu-open');
+        },
+        closeMenu: function () {
+            this.$navMenu.removeClass('menu-open');
+        }
+    };
     var digthisListItems = {
         init: function () {
             // cache dom elements
@@ -56,11 +74,11 @@
                 }
             })
         },
-        filterItems: function(e){
+        filterItems: function (e) {
             e.preventDefault();
             var $el = $(e.currentTarget);
             var category_id = $el.val();
-            this.getItems({category_id:category_id});
+            this.getItems({category_id: category_id});
         },
         renderItems: function (listHTML, pagination) {
             //place the items found
@@ -75,6 +93,9 @@
     var JSCODEORGANIZATION = {
         common: {
             init: function () {
+                //menu trigger
+                mainNavigation.init();
+
                 digthisListItems.init();
             },
             finalize: function () {

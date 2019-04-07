@@ -1,6 +1,14 @@
 .page.page-one-column:not(.twentyseventeen-front-page) #primary{margin-left:0;margin-right:0;max-width:100%}
-.digthis-list-container div.pagination{list-style:none;padding:0}.digthis-list-container div.pagination .page-numbers li{display:inline-block}
-.digthis-list-container .filter-items form{margin-bottom:20px}.digthis-list-container .filter-items form .search{display:inline-block;width:80%}
+.nav-trigger a{background-color:#000;display:inline-block;position:relative;padding:5px}
+.nav-trigger a span{display:block;position:relative;margin:0;padding:0;width:40px;height:5px;background:#fff;margin-bottom:5px;border-radius:3px}
+.navigation-custom{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0.75);z-index:-1;opacity:0}
+.navigation-custom.menu-open{opacity:1;z-index:3}.navigation-custom .wrap{position:absolute !important;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);max-width:none;padding:0;margin:0;color:#fff}
+.navigation-custom .wrap #top-menu li{display:block;text-align:left;font-size:2rem}
+.navigation-custom .wrap #top-menu li a{color:rgba(255,255,255,0.9);padding:0;margin:0 0 10% 0}
+.navigation-custom .wrap #top-menu li a:hover{color:white}.navigation-custom .close-menu{position:absolute;top:0;right:10%;font-size:2rem}
+.navigation-custom .close-menu a{color:#fff}.digthis-list-container div.pagination{list-style:none;padding:0}
+.digthis-list-container div.pagination .page-numbers li{display:inline-block}.digthis-list-container .filter-items form{margin-bottom:20px}
+.digthis-list-container .filter-items form .search{display:inline-block;width:80%}
 .digthis-list-container .filter-items form input{font-size:1rem;line-height:2rem;padding:10px}
 .digthis-list-container .filter-items form input[type="submit"]{width:18%;display:inline-block}
 .digthis-list-container .item-container{width:100%;padding:0 auto}.digthis-list-container .item-container:hover .item-details{display:block}
