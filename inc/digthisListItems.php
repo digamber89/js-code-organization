@@ -159,6 +159,7 @@ class digthisListItems {
 						'hide_empty' => false
 					);
 					$terms = get_terms( $args );
+					echo '<option value="">All</option>';
 					foreach ( $terms as $term ) {
 					    echo '<option value="'.$term->term_id.'">'.$term->name.'</option>';
 					}

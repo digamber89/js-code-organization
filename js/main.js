@@ -11,10 +11,12 @@
             this.$navMenu.on('click', '.close-menu a', this.closeMenu.bind(this));
         },
         openMenu: function () {
+            this.$navMenu.removeClass('menu-closed');
             this.$navMenu.addClass('menu-open');
         },
         closeMenu: function () {
-            this.$navMenu.removeClass('menu-open');
+            this.$navMenu.addClass('menu-closed');
+            //this.$navMenu.removeClass('menu-open');
         }
     };
     var digthisListItems = {
