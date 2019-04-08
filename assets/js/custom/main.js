@@ -1,4 +1,21 @@
 (function ($) {
+    var common = {
+        init: function () {
+            //cache dom
+            this.$html = $('html');
+            this.$body = $('body');
+            this.$pageLoader = $('#page-loader');
+
+
+            //event handlers
+            //setTimeout(this.hideLoader.bind(this), 800);
+            $(window).on('load',this.hideLoader.bind(this));
+        },
+        hideLoader: function () {
+            this.$pageLoader.hide();
+        }
+    };
+
     var backToTop = {
         init: function () {
             //cache dom
@@ -133,6 +150,8 @@
         common: {
             init: function () {
                 console.log('at the beginning of document ready');
+                common.init();
+
                 //backToTop
                 backToTop.init();
 
@@ -145,9 +164,9 @@
                 console.log('at the end of document ready');
             }
         },
-        'home': {
+        'contact-page': {
             init: function () {
-                console.log('test');
+                //alert('I am glad we can help');
             }
         }
     };

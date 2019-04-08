@@ -6,7 +6,6 @@ function twentynine_enqueue_styles() {
 	$ver          = wp_get_theme()->get( 'Version' );
 
 	/*Dont Want Navigation.js*/
-	
 
 
 	wp_register_style( $parent_style, get_template_directory_uri() . '/style.css' );
@@ -24,17 +23,36 @@ function twentynine_enqueue_styles() {
 	wp_localize_script( 'child-script', 'JSC', $data );
 }
 
-add_action('wp_enqueue_script','derigester_parent_theme_styles',999);
-function derigester_parent_theme_styles(){
-	wp_deregister_style('twentyseventeen-navigation');
-	wp_dequeue_style('twentyseventeen-navigation');
+add_action( 'wp_enqueue_script', 'derigester_parent_theme_styles', 999 );
+function derigester_parent_theme_styles() {
+	wp_deregister_style( 'twentyseventeen-navigation' );
+	wp_dequeue_style( 'twentyseventeen-navigation' );
 }
 
 require_once( get_stylesheet_directory() . '/inc/digthisListItems.php' );
 
-function js_code_organization_back_to_top(){
-	?>
-	<a href="#" id="back-to-top">Top</a>
+
+function digthis_additional_classes( $classes ) {
+	$additional_classes = get_field( 'additional_classes' );
+	$additional_classes = explode( ',', $additional_classes );
+
+	return array_merge( $classes, $additional_classes );
+}
+
+add_filter( 'body_class', 'digthis_additional_classes' );
+
+function js_code_organization_back_to_top() {
+	echo '<a href="#" id="back-to-top">Top</a>';
+}
+
+add_action( 'wp_footer', 'js_code_organization_back_to_top' );
+
+function js_code_organization_page_loader() {
+    ?>
+	<div id="page-loader">
+		<strong>Loading...</strong>
+	</div>
 	<?php
 }
-add_action('wp_footer','js_code_organization_back_to_top');
+
+add_action( 'wp_footer', 'js_code_organization_page_loader' );
