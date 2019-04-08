@@ -7,8 +7,8 @@
             this.$menuOpenTrigger = $(document).find('.nav-trigger');
 
             //event triggers
-            this.$menuOpenTrigger.on('click', this.openMenu.bind(this));
-            this.$navMenu.on('click', '.close-menu', this.closeMenu.bind(this));
+            this.$menuOpenTrigger.on('click', 'a', this.openMenu.bind(this));
+            this.$navMenu.on('click', '.close-menu a', this.closeMenu.bind(this));
         },
         openMenu: function () {
             this.$navMenu.addClass('menu-open');
