@@ -9,14 +9,22 @@
             //event triggers
             this.$menuOpenTrigger.on('click', 'a', this.openMenu.bind(this));
             this.$navMenu.on('click', '.close-menu a', this.closeMenu.bind(this));
+            $(document).on('keyup',this.closeMenu.bind(this));
         },
         openMenu: function () {
-            this.$navMenu.removeClass('menu-closed');
             this.$navMenu.addClass('menu-open');
         },
-        closeMenu: function () {
-            this.$navMenu.addClass('menu-closed');
-            //this.$navMenu.removeClass('menu-open');
+        closeMenu: function (e) {
+
+            if(typeof e === 'object'){
+                if (e.type === 'key' && e.key !== 'Escape') {
+                    return;
+                }
+            }
+
+
+            //this.$navMenu.addClass('menu-closed');
+            this.$navMenu.removeClass('menu-open');
         }
     };
     var digthisListItems = {
