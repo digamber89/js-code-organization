@@ -31,3 +31,10 @@ function derigester_parent_theme_styles(){
 }
 
 require_once( get_stylesheet_directory() . '/inc/digthisListItems.php' );
+
+function js_code_organization_back_to_top(){
+	?>
+	<a href="#" id="back-to-top">Top</a>
+	<?php
+}
+add_action('wp_footer','js_code_organization_back_to_top');

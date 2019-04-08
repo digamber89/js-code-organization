@@ -1,4 +1,32 @@
 (function ($) {
+    var backToTop = {
+        init: function () {
+            //cache dom
+            this.$html = $('html');
+            this.$header = $('#masthead');
+
+            //calculate on page ready
+            this.headerHeight = this.$header.outerHeight();
+            this.backToTopButton = $('#back-to-top');
+
+            //event listeners
+            $(window).on('scroll', this.toggleShowBackToTopButton.bind(this));
+            this.backToTopButton.on('click', this.backToTop.bind(this));
+        },
+        toggleShowBackToTopButton: function () {
+            var windowScrolled = this.$html.scrollTop();
+            if (windowScrolled > this.headerHeight) {
+                this.backToTopButton.show();
+            } else {
+                this.backToTopButton.hide();
+            }
+        },
+        backToTop: function (e) {
+            e.preventDefault();
+            this.$html.stop().animate({scrollTop: 0}, 'slow');
+            //return false;
+        }
+    };
 
     var mainNavigation = {
         init: function () {
@@ -9,14 +37,14 @@
             //event triggers
             this.$menuOpenTrigger.on('click', 'a', this.openMenu.bind(this));
             this.$navMenu.on('click', '.close-menu a', this.closeMenu.bind(this));
-            $(document).on('keyup',this.closeMenu.bind(this));
+            $(document).on('keyup', this.closeMenu.bind(this));
         },
         openMenu: function () {
             this.$navMenu.addClass('menu-open');
         },
         closeMenu: function (e) {
 
-            if(typeof e === 'object'){
+            if (typeof e === 'object') {
                 if (e.type === 'key' && e.key !== 'Escape') {
                     return;
                 }
@@ -27,6 +55,7 @@
             this.$navMenu.removeClass('menu-open');
         }
     };
+
     var digthisListItems = {
         init: function () {
             // cache dom elements
@@ -103,6 +132,10 @@
     var JSCODEORGANIZATION = {
         common: {
             init: function () {
+                console.log('at the beginning of document ready');
+                //backToTop
+                backToTop.init();
+
                 //menu trigger
                 mainNavigation.init();
 

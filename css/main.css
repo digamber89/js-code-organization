@@ -144,4 +144,14 @@
     .digthis-list-container .item-container .nothing-found h3 {
       text-align: center; }
 
+#back-to-top {
+  position: fixed;
+  z-index: 2;
+  bottom: 10%;
+  right: 10%;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  display: none; }
+
 /*# sourceMappingURL=maps/main.css.map */
