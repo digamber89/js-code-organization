@@ -33,10 +33,14 @@ require_once( get_stylesheet_directory() . '/inc/digthisListItems.php' );
 
 
 function digthis_additional_classes( $classes ) {
-	$additional_classes = get_field( 'additional_classes' );
-	$additional_classes = explode( ',', $additional_classes );
+    if( function_exists('get_field')){
+	    $additional_classes = get_field( 'additional_classes' );
+	    $additional_classes = explode( ',', $additional_classes );
 
-	return array_merge( $classes, $additional_classes );
+	    $classes = array_merge( $classes, $additional_classes );
+    }
+    return $classes;
+
 }
 
 add_filter( 'body_class', 'digthis_additional_classes' );
