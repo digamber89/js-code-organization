@@ -25,7 +25,7 @@
         hideLoader: function () {
             this.$pageLoader.hide();
         },
-        updateDetailsOnResize:function(){
+        updateDetailsOnResize: function () {
             this.windowWidth = this.$window.width();
         }
     };
@@ -97,12 +97,10 @@
         closeMenu: function (e) {
 
             if (typeof e === 'object') {
-                if (e.type === 'key' && e.key !== 'Escape') {
-                    return;
+                if (e.type === 'keyup' && e.key !== 'Escape') {
+                    return false;
                 }
             }
-
-
             //this.$navMenu.addClass('menu-closed');
             this.$navMenu.removeClass('menu-open');
         }
