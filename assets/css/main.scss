@@ -1,3 +1,5 @@
+@import "slick";
+@import "slick-theme";
 #page-loader {
   position: fixed;
   display: block;
@@ -239,4 +241,17 @@
   color: #fff;
   padding: 10px;
   display: none;
+}
+
+.digthis-slick-slider{
+  background: #000;
+  .slick-arrow{
+    z-index:3;
+  }
+  .slick-next{
+    right:0;
+  }
+  .slick-prev{
+    left:0;
+  }
 }

@@ -189,6 +189,11 @@
                 mainNavigation.init();
 
                 digthisListItems.init();
+
+                //initialize slick slider
+                $('.digthis-slick-slider').slick({
+                    arrows: true
+                });
             },
             finalize: function () {
                 console.log('at the end of document ready');
