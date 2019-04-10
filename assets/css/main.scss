@@ -1,7 +1,7 @@
 #page-loader {
   position: fixed;
-  display:block;
-  background: rgba(0,0,0,0.9);
+  display: block;
+  background: rgba(0, 0, 0, 0.9);
   color: #fff;
   top: 0;
   left: 0;
@@ -25,6 +25,7 @@
   max-width: 100%;
 }
 
+//style the navigation trigger aka burger menu
 .nav-trigger {
   a {
     background-color: #000;
@@ -56,14 +57,15 @@
       background: none;
       border-top: none;
     }
-    @media screen and(max-width:567px) {
-      ul.sub-menu{
-        display:none;
+    @media screen and(max-width: 567px) {
+      ul.sub-menu {
+        display: none;
       }
     }
   }
 }
 
+//this is the main navigation container
 .navigation-custom {
   transition: transform 0.4s ease-in-out;
   position: fixed;
@@ -87,15 +89,23 @@
     margin: 0;
     color: #fff;
     #top-menu {
-      ul.sub-menu{
-        display:none;
-      }
-
-
       li {
         display: block;
         text-align: left;
         font-size: 2rem;
+        &.menu-item-has-children {
+          ul.sub-menu {
+            display: none;
+            position:relative;
+            top:0;
+            left:inherit;
+          }
+          &:hover {
+            ul.sub-menu {
+              display: inline-block;
+            }
+          }
+        }
         a {
           color: rgba(255, 255, 255, 0.9);
           padding: 0;
