@@ -8,7 +8,7 @@
 }.navigation-custom{-webkit-transition:-webkit-transform .4s ease-in-out;transition:-webkit-transform .4s ease-in-out;transition:transform .4s ease-in-out;transition:transform .4s ease-in-out,-webkit-transform .4s ease-in-out;position:fixed;top:0;left:0;width:100%;height:100vh;-webkit-transform:translateY(-100%);transform:translateY(-100%);background:rgba(0,0,0,0.75);z-index:3}
 .navigation-custom.menu-open{-webkit-transform:translateY(0);transform:translateY(0)}
 .navigation-custom .wrap{position:absolute !important;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);max-width:none;padding:0;margin:0;color:#fff}
-.navigation-custom .wrap #top-menu li{display:block;text-align:left;font-size:2rem}
+.navigation-custom .wrap #top-menu ul.sub-menu{display:none}.navigation-custom .wrap #top-menu li{display:block;text-align:left;font-size:2rem}
 .navigation-custom .wrap #top-menu li a{color:rgba(255,255,255,0.9);padding:0;margin:0 0 10% 0}
 .navigation-custom .wrap #top-menu li a:hover{color:white}.navigation-custom .close-menu{position:absolute;top:10%;right:10%;font-size:2rem}
 .navigation-custom .close-menu a{color:#fff}.navigation-custom .close-menu a:focus{outline:0}
