@@ -145,9 +145,7 @@ class digthisListItems {
                     <input type="submit" value="search">
                 </form>
             </div>
-            <div class="pagination">
-				<?php echo $this->get_pagination( $listItems, 1 ); ?>
-            </div>
+            
             <div class="item-filters">
                 <label for="category">
                     Select Category
@@ -180,6 +178,9 @@ class digthisListItems {
 				endif;
 				?>
             </div><!--item-container-->
+            <div class="pagination">
+				<?php echo $this->get_pagination( $listItems, 1 ); ?>
+            </div>
         </div><!--digthis-list-container-->
 		<?php
 		return ob_get_clean();

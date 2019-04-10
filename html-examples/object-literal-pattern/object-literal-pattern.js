@@ -10,6 +10,7 @@ $(function(){
 				this.eventListeners();
 			},
 			cacheDOM: function(){
+				this.example = 6;
 				//use $ sign to distinguish jQuery objects from other variables
 				this.$body = $('.body');
 				//we're expecting this will be calculated on DOM ready
@@ -21,7 +22,12 @@ $(function(){
 
 				//for html or other elements that are returned from ajax calls - we must use the format $('elemenet-selector').on('event','child-element-within-selector','function');
 				//e.g.
-				$('.grid').on('click','.item a',this.showDetails.bind(this));
+				$('a.clickable').on('click',this.clickMe.bind(this));
+			},
+			clickMe: function(e){
+				e.preventDefault();
+				var $el = $(e.currentTarget);
+
 			},
 			showDetails: function(e){
 				//The currentTarget event property returns the element whose event listeners triggered the event.
@@ -32,7 +38,7 @@ $(function(){
 				//then you can do all sort of stuff with it.
 				$attr = $el.attr('href');
 				if($attr === '#'){
-					alert('Sorry no details available here');
+					alert(this.example);
 				}
 			}
 

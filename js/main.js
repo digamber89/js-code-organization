@@ -1,20 +1,36 @@
+
 (function ($) {
+
     var common = {
         init: function () {
+            this.cacheDOM();
+            this.eventListeners();
+        },
+        cacheDOM: function () {
             //cache dom
+            this.$window = $(window);
             this.$html = $('html');
             this.$body = $('body');
             this.$pageLoader = $('#page-loader');
 
+            // data that would need recalculation on window width
+            this.windowWidth = $(window).width();
 
+        },
+        eventListeners: function () {
             //event handlers
-            //setTimeout(this.hideLoader.bind(this), 800);
+            //setTimeout(this.hideLoader.bind(this), 2000);
             $(window).on('load', this.hideLoader.bind(this));
+            $(window).on('resize', this.updateDetailsOnResize.bind(this));
         },
         hideLoader: function () {
             this.$pageLoader.hide();
+        },
+        updateDetailsOnResize:function(){
+            this.windowWidth = this.$window.width();
         }
     };
+
 
     var backToTop = {
         init: function () {
@@ -63,18 +79,15 @@
             //event triggers
             this.$menuOpenTrigger.on('click', 'a', this.openMenu.bind(this));
             this.$navMenu.on('click', '.close-menu a', this.closeMenu.bind(this));
-            //$(document).on('keyup', this.closeMenu.bind(this));
+            $(document).on('keyup', this.closeMenu.bind(this));
 
             this.$parentMenu.on('click', this.showSubMenu.bind(this));
-            $(window).on('resize', this.updateData);
 
         },
-        updateData: function () {
-            this.windowWidth = $(window).width();
-        },
         showSubMenu: function (e) {
-            e.preventDefault();
-            if (this.windowWidth <= 567) {
+            if (common.windowWidth <= 567) {
+                //preventDefault needs to be within condition otherwise it will fire on all screens
+                e.preventDefault();
                 var $el = $(e.currentTarget);
                 $el.next('ul.sub-menu').slideToggle();
             }
@@ -107,10 +120,7 @@
             this.$filterForm = this.$mainContainer.find('.filter-items form');
             this.$itemContainer = this.$mainContainer.find('.item-container');
             this.$paginationContainer = this.$mainContainer.find('.pagination');
-            this.$pagination = this.$paginationContainer.find('.page-numbers');
-
             this.$itemFilters = this.$mainContainer.find('.item-filters');
-            //console.log(this.$pagination);
         },
         eventListeners: function () {
             this.$filterForm.on('submit', this.getSearchResult.bind(this));
@@ -187,7 +197,7 @@
                 console.log('at the end of document ready');
             }
         },
-        'contact-page': {
+        'home': {
             init: function () {
                 //alert('I am glad we can help');
             }
