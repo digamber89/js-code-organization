@@ -46,6 +46,10 @@
   background: none;
   border-top: none; }
 
+@media screen and (max-width: 567px) {
+  .js .main-navigation ul.sub-menu {
+    display: none; } }
+
 .navigation-custom {
   -webkit-transition: -webkit-transform 0.4s ease-in-out;
   transition: -webkit-transform 0.4s ease-in-out;

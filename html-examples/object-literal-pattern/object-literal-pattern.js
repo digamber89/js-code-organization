@@ -13,7 +13,7 @@ $(function(){
 				//use $ sign to distinguish jQuery objects from other variables
 				this.$body = $('.body');
 				//we're expecting this will be calculated on DOM ready
-				this.bodyHeight = $('.body').outerHeight();
+				this.bodyHeight = this.$body.outerHeight();
 			},
 			eventListeners: function(){
 				//here we set the event listenere

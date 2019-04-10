@@ -9,7 +9,7 @@
 
             //event handlers
             //setTimeout(this.hideLoader.bind(this), 800);
-            $(window).on('load',this.hideLoader.bind(this));
+            $(window).on('load', this.hideLoader.bind(this));
         },
         hideLoader: function () {
             this.$pageLoader.hide();
@@ -18,14 +18,20 @@
 
     var backToTop = {
         init: function () {
+            this.cacheDOM();
+            this.eventListeners();
+        },
+        cacheDOM: function () {
             //cache dom
             this.$html = $('html');
             this.$header = $('#masthead');
 
             //calculate on page ready
+            this.windowWidth = $(window).width();
             this.headerHeight = this.$header.outerHeight();
             this.backToTopButton = $('#back-to-top');
-
+        },
+        eventListeners: function () {
             //event listeners
             $(window).on('scroll', this.toggleShowBackToTopButton.bind(this));
             this.backToTopButton.on('click', this.backToTop.bind(this));
@@ -50,11 +56,28 @@
             //cache dom
             this.$navMenu = $(document).find('.navigation-custom');
             this.$menuOpenTrigger = $(document).find('.nav-trigger');
+            this.$parentMenu = this.$navMenu.find('li.menu-item-has-children a');
+            this.windowWidth = $(window).width();
+
 
             //event triggers
             this.$menuOpenTrigger.on('click', 'a', this.openMenu.bind(this));
             this.$navMenu.on('click', '.close-menu a', this.closeMenu.bind(this));
-            $(document).on('keyup', this.closeMenu.bind(this));
+            //$(document).on('keyup', this.closeMenu.bind(this));
+
+            this.$parentMenu.on('click', this.showSubMenu.bind(this));
+            $(window).on('resize', this.updateData);
+
+        },
+        updateData: function () {
+            this.windowWidth = $(window).width();
+        },
+        showSubMenu: function (e) {
+            e.preventDefault();
+            if (this.windowWidth <= 567) {
+                var $el = $(e.currentTarget);
+                $el.next('ul.sub-menu').slideToggle();
+            }
         },
         openMenu: function () {
             this.$navMenu.addClass('menu-open');
