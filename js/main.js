@@ -174,12 +174,37 @@
         }
     };
 
+    var digthisSlickSlider = function () {
+        var sliderOptions = {
+            'arrows': true
+        };
+        var init = function (element) {
+            var $element = $(element);
+            //get options via data
+            var options = $element.data('slider_settings');
+            $.extend(sliderOptions, options);
+            console.log(sliderOptions);
+
+
+            $element.slick(sliderOptions);
+        };
+        return {
+            init: init
+        }
+    };
+
     //JSCODEORGANIZATION - replace with project name
     //e.g. stealth become STEALTH
     var JSCODEORGANIZATION = {
+        helpers: {
+            slickListener: function (event, element) {
+                /*Slider Based on Shortcode*/
+                var digthisSlider = digthisSlickSlider();
+                digthisSlider.init(element);
+            }
+        },
         common: {
             init: function () {
-                console.log('at the beginning of document ready');
                 common.init();
 
                 //backToTop
@@ -190,10 +215,10 @@
 
                 digthisListItems.init();
 
-                //initialize slick slider
-                $('.digthis-slick-slider').slick({
-                    arrows: true
-                });
+
+                /*Body Trigger Listener*/
+                $('body').on('digthis-slick-init', JSCODEORGANIZATION.helpers.slickListener);
+
             },
             finalize: function () {
                 console.log('at the end of document ready');
@@ -239,6 +264,7 @@
 
     $(function () {
         WEN_JS_UTIL.loadEvents();
+
     });
 
 })(jQuery);
