@@ -101,8 +101,9 @@ gulp.task('compileCustomJS', function(){
 
 
 /*Default tasks that will be run when using "gulp" command*/
-gulp.task('default', ['compileStyles', 'compileVendorJS', 'compileCustomJS' ],  function(){
-	gulp.watch( stylesSource, ['compileStyles'] );
-	gulp.watch( jsVendorSource, ['compileVendorJS'] );
-	gulp.watch( jsCustomSource, ['compileCustomJS'] );
-});
+gulp.task('default', gulp.series('compileStyles', 'compileVendorJS', 'compileCustomJS', (done) => {
+	gulp.watch( stylesSource, gulp.series('compileStyles') );
+	gulp.watch( jsVendorSource, gulp.series('compileVendorJS') );
+	gulp.watch( jsCustomSource, gulp.series('compileCustomJS') );
+	done();
+}));
